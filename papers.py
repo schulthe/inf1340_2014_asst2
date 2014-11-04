@@ -20,11 +20,11 @@ with open("example_entries.json", "r") as file_reader:
     input_file = file_reader.read()
     json_inputs = json.loads(input_file)
 
-with open("watchlist.json", "r") as file_reader:
+with open ("watchlist.json", "r") as file_reader:
     watchlist_file = file_reader.read()
     json_watchlist = json.loads(watchlist_file)
 
-with open("countries.json", "r") as file_reader:
+with open ("countries.json", "r") as file_reader:
     countries_file = file_reader.read()
     json_countries = json.loads(countries_file)
 
@@ -42,6 +42,17 @@ def decide(input_file, watchlist_file, countries_file):
 
     # reject if incomplete entry
 
+    input_file = 0
+
+    key = 0
+
+    if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" and "from":
+        print("Accept")
+    else:
+        print("Reject")
+
+        # reject if incomplete entry
+
     # quarantine if medical advisory in "from" country
 
     # secondary if on watchlist
@@ -53,14 +64,30 @@ def decide(input_file, watchlist_file, countries_file):
 
     # conflict order - Q, R, S, A
 
-for key in input_file():
-if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" \
-        and "from":
-   print("reject")
+
+for values in input_file():
+    if values
+    if value("passport") == "":
+        return ["Reject"]
+
+
+first_name = input_file.read(value)
+return ["Reject"]
+
+for value in key(first_name):
+    print(value(line))
+
+
+if input_file == "":
+    elif
+    return ("Reject")
+
+for passport in file_contents:
+    print(passport)
+file_contents = file_reader.read()
 
 
     return ["Reject"]
-
 
 def valid_passport_format(passport_number):
     """

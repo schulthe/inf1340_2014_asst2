@@ -16,15 +16,11 @@ import datetime
 import json
 
 
-with open("example_entries.json", "r") as file_reader:
-    input_file = file_reader.read()
-    json_inputs = json.loads(input_file)
-
-with open ("watchlist.json", "r") as file_reader:
+with open("watchlist.json", "r") as file_reader:
     watchlist_file = file_reader.read()
     json_watchlist = json.loads(watchlist_file)
 
-with open ("countries.json", "r") as file_reader:
+with open("countries.json", "r") as file_reader:
     countries_file = file_reader.read()
     json_countries = json.loads(countries_file)
 
@@ -41,17 +37,18 @@ def decide(input_file, watchlist_file, countries_file):
     """
 
     # reject if incomplete entry
+    with open("example_entries.json", "r") as file_reader:
+        input_file = file_reader.read()
+        json_inputs = json.loads(input_file)
 
-    key = 0
-
-    if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" and "from":
-        print("Accept")
-    else:
-        print("Reject")
-
-        # reject if incomplete entry
+        for ele in json_inputs:
+            if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
+                print("Accept")
+            else:
+                print("Reject")
 
     # quarantine if medical advisory in "from" country
+
 
     # secondary if on watchlist
 
@@ -90,3 +87,5 @@ def valid_date_format(date_string):
         return True
     except ValueError:
         return False
+
+decide("test_returning_citizen.json", "watchlist.json", "countries.json")

@@ -40,9 +40,16 @@ def decide(input_file, watchlist_file, countries_file):
     :return: List of strings. Possible values of strings are: "Accept", "Reject", "Secondary", and "Quarantine"
     """
 
+    # reject if incomplete entry
+
     input_file = 0
 
-    if input_file == "":
+    key = 0
+
+    if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" and "from":
+        print("Accept")
+    else:
+        print("Reject")
 
         # reject if incomplete entry
 
@@ -57,12 +64,9 @@ def decide(input_file, watchlist_file, countries_file):
 
     # conflict order - Q, R, S, A
 
-if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" \
-    and "from":
-    print("reject")
-    
+
 for values in input_file():
-    if values.
+    if values
     if value("passport") == "":
         return ["Reject"]
 
@@ -84,7 +88,6 @@ file_contents = file_reader.read()
 
 
     return ["Reject"]
-
 
 def valid_passport_format(passport_number):
     """

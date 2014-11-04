@@ -40,7 +40,11 @@ def decide(input_file, watchlist_file, countries_file):
     :return: List of strings. Possible values of strings are: "Accept", "Reject", "Secondary", and "Quarantine"
     """
 
-    # reject if incomplete entry
+    input_file = 0
+
+    if input_file == "":
+
+        # reject if incomplete entry
 
     # quarantine if medical advisory in "from" country
 
@@ -55,7 +59,7 @@ def decide(input_file, watchlist_file, countries_file):
 
 if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" \
     and "from":
-    print ("reject")
+    print("reject")
     
 for values in input_file():
     if values.

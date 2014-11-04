@@ -51,6 +51,12 @@ def decide(input_file, watchlist_file, countries_file):
     else:
         print("Reject")
 
+    if country.value in input_file == "KAN"
+        print("Accept")
+    else:
+        print("Reject")
+
+
         # reject if incomplete entry
 
     # quarantine if medical advisory in "from" country
@@ -65,26 +71,10 @@ def decide(input_file, watchlist_file, countries_file):
     # conflict order - Q, R, S, A
 
 
-for values in input_file():
-    if values
-    if value("passport") == "":
+
         return ["Reject"]
 
 
-first_name = input_file.read(value)
-return ["Reject"]
-
-for value in key(first_name):
-    print(value(line))
-
-
-if input_file == "":
-    elif
-    return ("Reject")
-
-for passport in file_contents:
-    print(passport)
-file_contents = file_reader.read()
 
 
     return ["Reject"]

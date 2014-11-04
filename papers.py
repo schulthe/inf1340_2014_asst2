@@ -42,8 +42,6 @@ def decide(input_file, watchlist_file, countries_file):
 
     # reject if incomplete entry
 
-    input_file = 0
-
     key = 0
 
     if key in input_file == "passport" and "first_name" and "last_name" and "birth_date" and "home" and "entry_reason" and "from":
@@ -63,28 +61,6 @@ def decide(input_file, watchlist_file, countries_file):
         # accept if visiting, if country needs visitor visa, if valid (less than 2 years) or R
 
     # conflict order - Q, R, S, A
-
-
-for values in input_file():
-    if values
-    if value("passport") == "":
-        return ["Reject"]
-
-
-first_name = input_file.read(value)
-return ["Reject"]
-
-for value in key(first_name):
-    print(value(line))
-
-
-if input_file == "":
-    elif
-    return ("Reject")
-
-for passport in file_contents:
-    print(passport)
-file_contents = file_reader.read()
 
 
     return ["Reject"]

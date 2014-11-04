@@ -15,6 +15,12 @@ import re
 import datetime
 import json
 
+with open('test_returning_citizen.json', 'r') as file_reader:
+    file_contents = file_reader.read()
+
+for passport in file_contents:
+    print(passport)
+
 
 def decide(input_file, watchlist_file, countries_file):
     """
@@ -26,12 +32,26 @@ def decide(input_file, watchlist_file, countries_file):
         an entry or transit visa is required, and whether there is currently a medical advisory
     :return: List of strings. Possible values of strings are: "Accept", "Reject", "Secondary", and "Quarantine"
     """
+
+    # reject if incomplete entry
+
+    # quarantine if medical advisory in "from" country
+
+    # secondary if on watchlist
+
+    # reason
+        # accept if return home and citizen, if no med advisory (Q) or watchlist (S)
+        # accept if transit, if country needs transit visa, if valid (less than 2 years) or R
+        # accept if visiting, if country needs visitor visa, if valid (less than 2 years) or R
+
+    # conflict order - Q, R, S, A
+
     return ["Reject"]
 
 
 def valid_passport_format(passport_number):
     """
-    Checks whether a pasport number is five sets of five alpha-number characters separated by dashes
+    Checks whether a passport number is five sets of five alpha-number characters separated by dashes
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """

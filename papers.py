@@ -15,13 +15,6 @@ import re
 import datetime
 import json
 
-with open('test_returning_citizen.json', 'r') as file_reader:
-    file_contents = file_reader.read()
-
-for passport in file_contents:
-    print(passport)
-
-
 def decide(input_file, watchlist_file, countries_file):
     """
     Decides whether a traveller's entry into Kanadia should be accepted
@@ -45,6 +38,21 @@ def decide(input_file, watchlist_file, countries_file):
         # accept if visiting, if country needs visitor visa, if valid (less than 2 years) or R
 
     # conflict order - Q, R, S, A
+
+with open("example_entries.json", "r") as file_reader:
+    input_file = file_reader.read()
+with open ("watchlist.json", "r") as file_reader:
+    watchlist_file = file_reader.read()
+with open ("countries.json", "r") as file_reader:
+    countries_file = file_reader.read()
+
+if file_contents.key ("first_name") == "":
+    return ("Reject")
+
+for passport in file_contents:
+    print(passport)
+file_contents = file_reader.read()
+
 
     return ["Reject"]
 

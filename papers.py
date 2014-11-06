@@ -16,15 +16,6 @@ import datetime
 import json
 
 
-with open("watchlist.json", "r") as file_reader:
-    watchlist_file = file_reader.read()
-    json_watchlist = json.loads(watchlist_file)
-
-with open("countries.json", "r") as file_reader:
-    countries_file = file_reader.read()
-    json_countries = json.loads(countries_file)
-
-
 def decide(input_file, watchlist_file, countries_file):
     """
     Decides whether a traveller's entry into Kanadia should be accepted
@@ -37,28 +28,54 @@ def decide(input_file, watchlist_file, countries_file):
     """
 
     # reject if incomplete entry
-    with open("example_entries.json", "r") as file_reader:
-        input_file = file_reader.read()
+    with open("example_entries.json", "r") as entries_reader:
+        input_file = entries_reader.read()
         json_inputs = json.loads(input_file)
 
         for ele in json_inputs:
-            if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
-                print("Accept")
-            else:
-                print("Reject")
+            if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in \
+            ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
 
-    # quarantine if medical advisory in "from" country
+                # secondary if on watchlist
+                with open("watchlist.json", "r") as watchlist_reader:
+                    watchlist_file = watchlist_reader.read()
+                    json_watchlist = json.loads(watchlist_file)
 
+                    for item in json_watchlist:
+                        if item.values() == ele.values() in json_inputs:
 
-    # secondary if on watchlist
+                            with open("countries.json", "r") as country_reader:
+                                countries_file = country_reader.read()
+                                json_countries = json.loads(countries_file)
 
-    # reason
-        # accept if return home and citizen, if no med advisory (Q) or watchlist (S)
-        # accept if transit, if country needs transit visa, if valid (less than 2 years) or R
-        # accept if visiting, if country needs visitor visa, if valid (less than 2 years) or R
+                                # quarantine if medical advisory has value
+                                for country in json_countries:
+                                    if "medical_advisory" in country.values():
+                                        print("Quarantine")
+
+                                for country in json_countries:
+                                    for visa in json_inputs:
+                                        if "entry_reason" == "transit":
+                                            if "transit_visa_required" in country.values() == "1" and "date" > date.time:
+                                                print("Reject")
+                                            elif "transit_visa_required" in country.values() == "1" and "date" < date.time:
+                                                print("Accept")
+                                            elif "transit_visa_required" in country.values() == "0":
+                                                print("Accept")
+                                        if "entry_reason" == "visit":
+                                            if "visitor_visa_required" in country.values() == "1" and "date" > date.time:
+                                                print("Reject")
+                                            elif "visitor_visa_required" in country.values() == "1" and "date" < date.time:
+                                                print("Accept")
+                                            elif "visitor_visa_required" in country.values() == "0":
+                                                print("Accept")
+                        else:
+                            print("Secondary")
 
     # conflict order - Q, R, S, A
 
+            else:
+                print("Reject")
 
     return ["Reject"]
 

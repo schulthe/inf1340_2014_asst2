@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" Module to test papers.py  """
+""" Module to test papers.py """
 
 __author__ = 'Sarah-Anne Schultheis, Sonia Duda'
 __email__ = "sarah.schultheis@mail.utoronto.ca, sonia.duda@mail.utoronto.ca"
@@ -14,7 +14,6 @@ __status__ = "Prototype"
 import pytest
 from papers import decide
 
-
 def test_basic():
     assert decide("test_returning_citizen.json", "watchlist.json", "countries.json") == ["Accept", "Accept"]
     assert decide("test_watchlist.json", "watchlist.json", "countries.json") == ["Secondary"]
@@ -26,4 +25,3 @@ def test_files():
         decide("test_returning_citizen.json", "", "countries.json")
 
 # add functions for other tests
-

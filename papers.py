@@ -129,9 +129,22 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    passport_format = re.compile('^\w{5}-\w{5}$')
+    passport_format = re.compile('^\w{5}-\w{5}-\w{5}-\w{5}-\w{5}$')
 
     if passport_format.match(passport_number):
+        return True
+    else:
+        return False
+
+def valid_visa_format(visa_code):
+    """
+    Checks whether a visa is five sets of five alpha-number characters separated by dashes
+    :param passport_number: alpha-numeric string
+    :return: Boolean; True if the format is valid, False otherwise
+    """
+    visa_format = re.compile('^\w{5}-\w{5}$')
+
+    if visa_format.match(visa_code):
         return True
     else:
         return False

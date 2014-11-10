@@ -42,8 +42,8 @@ def decide(input_file, watchlist_file, countries_file):
     entry_list = []
 
     for ele in json_inputs:
-        if ["passport"] in ele.keys() and ["first_name"] in ele.keys() and ["last_name"] in ele.keys() and ["home"] in \
-            ele.keys() and ["entry_reason"] in ele.keys() and ["from"] in ele.keys():
+        if ("passport") in ele.keys() and ("first_name") in ele.keys() and ("last_name") in ele.keys() and ("home") in \
+            ele.keys() and ("entry_reason") in ele.keys() and ("from") in ele.keys():
 
     # quarantine function
 
@@ -55,7 +55,7 @@ def decide(input_file, watchlist_file, countries_file):
                 if via_country != "":
                     entry_list.append("Quarantine")
 
-     # reject function
+    # reject function
 
             if ele.get["entry_reason"].lower() == "visit":
                 home_country = ele.get("home").get("country").lower()
@@ -129,7 +129,7 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    passport_format = re.compile('.{5}-.{5}-.{5}-.{5}-.{5}')
+    passport_format = re.compile('^\w{5}-\w{5}$')
 
     if passport_format.match(passport_number):
         return True
@@ -147,4 +147,3 @@ def valid_date_format(date_string):
         return True
     except ValueError:
         return False
-

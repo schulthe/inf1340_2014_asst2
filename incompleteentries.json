@@ -1,0 +1,18 @@
+[
+   {
+      "passport":"Y719F-F2HRB-KUL7A-3KREA-1JADP",
+      "last_name":"VALDEZ",
+      "birth_date":"1969-05-06",
+      "home":{
+         "city":"Truro",
+         "region":"NS",
+         "country":"KAN"
+      },
+      "entry_reason":"returning",
+      "from":{
+         "city":"Redux",
+         "region":"Partii",
+         "country":"ELE"
+      }
+   }
+]

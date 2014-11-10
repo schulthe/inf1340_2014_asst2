@@ -29,78 +29,88 @@ def decide(input_file, watchlist_file, countries_file):
 
     # converting json files for pycharm to read
     
-    with open("example_entries.json", "r") as entries_reader:
+    with open(input_file, "r") as entries_reader:
         input_file = entries_reader.read()
         json_inputs = json.loads(input_file)
-    with open("countries.json", "r") as country_reader:
+    with open(countries_file, "r") as country_reader:
         countries_file = country_reader.read()
         json_countries = json.loads(countries_file)
-    with open("watchlist.json", "r") as watchlist_reader:
+    with open(watchlist_file, "r") as watchlist_reader:
         watchlist_file = watchlist_reader.read()
         json_watchlist = json.loads(watchlist_file)
 
+    entry_list = []
+
+    for ele in json_inputs:
+        if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in \
+            ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
+            entry_list.append("Accept")
+
+            ## look into way to say if "passport" NOT in ele.keys()
+        else:
+            entry_list.append("Reject")
 
     # quarantine function
 
-        for country in json_countries:
-            if country.get("medical_advisory") != "":
-                print("Quarantine")
+        from_country = json_countries.get(ele.get("from").get("country")).get("medical_advisory")
+        if from_country != "":
+            entry_list.append("Quarantine")
+        if "via" in ele.keys():
+            via_country = json_countries.get(ele.get("via").get("country")).get("medical_advisory")
+            if via_country != "":
+                entry_list.append("Quarantine")
+
 
      # reject function
 
-        for ele in json_inputs:
-            if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in \
-            ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
-                print("Accept")
-            else:
-                print("Reject")
+        if ele.get("entry_reason") == "visit":
+            home_country = ele.get("home").get("country")
+            if json_countries.get(home_country).get("visitor_visa_required") == "1":
+                if "visa" in ele.keys:
+                    if valid_date_format(ele.get("visa").get("date")) == False:
+                        entry_list.append("Reject")
+                    oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
+                    if ele.get("visa").get("date") < oldest_acceptable_visa_date.isoformat():
+                        entry_list.append("Reject")
 
-        for country in json_countries:
-            for visa in json_inputs:
-                if key.get("entry_reason") == "visit":
-                    if "visitor_visa_required" in country.values() == "1" and "date" > date.time:
-                        print("Reject")
-                    elif "visitor_visa_required" in country.values() == "1" and "date" < date.time:
-                        print("Accept")
-                    elif "visitor_visa_required" in country.values() == "0":
-                        print("Accept")
-
-                if key.get("entry_reason") == "transit":
-                    if "transit_visa_required" in country.values() == "1" and "date" > date.time:
-                        print("Reject")
-                    elif "transit_visa_required" in country.values() == "1" and "date" < date.time:
-                        print("Accept")
-                    elif "transit_visa_required" in country.values() == "0":
-                        print("Accept")
+        if ele.get("entry_reason") == "transit":
+            home_country = ele.get("home").get("country")
+            if json_countries.get(home_country).get("transit_visa_required") == "1":
+                if "visa" in ele.keys:
+                    if valid_date_format(ele.get("visa").get("date")) == False:
+                        entry_list.append("Reject")
+                    oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
+                    if ele.get("visa").get("date") < oldest_acceptable_visa_date.isoformat():
+                        entry_list.append("Reject")
 
     # secondary function
                 
-        for item in jason_watchlist:
-            if item.get("first_name" and "last_name") == ele.get("first_name" and "last_name"):
-                print("Secondary")
-            elif item.get("passport") == ele.get ("passport"):
-                print("Secondary")
+        for item in json_watchlist:
+            if item.get("first_name") == ele.get("first_name") and item.get("last_name") == ele.get("last_name"):
+                entry_list.append("Secondary")
+            elif item.get("passport") == ele.get("passport"):
+                entry_list.append("Secondary")
             else:
-                print("Accept")
+                entry_list.append("Accept")
                         
 
     # accept function (do we need to have these stipulations included if whatever entry is left is automatically accept?)
     # if we have this function underneath the reject functions above, it will change priority order for these entries when they are not to be accepted)
     
-for ele in json_inputs:
-            if key.get("home") == "KAN"
-                print("Accept")
-            if key.get("entry_reason") == "returning" and key.get("home") == "KAN"
-                print("Accept")
+#for ele in json_inputs:
+ #           if key.get("home") == "KAN"
+  #              print("Accept")
+   #         if key.get("entry_reason") == "returning" and key.get("home") == "KAN"
+    #            print("Accept")
 
-            else:
-                print("Accept")
+     #       else:
+      #          print("Accept")
 
     
-    return ["Reject"]
+    return entry_list
 ## not sure where to put the re.IGNORECASE method
 
-    re.IGNORECASE("home" and "passport" and "first_name" and "last_name") etc.
+    #re.IGNORECASE("home" and "passport" and "first_name" and "last_name") etc.
     # or do we say "ignore all uppercase/lowercase discrepancies between all keys and all values in all json files?
     
 
@@ -131,4 +141,4 @@ def valid_date_format(date_string):
     except ValueError:
         return False
 
-decide("test_returning_citizen.json", "watchlist.json", "countries.json")
+decide("examples_entries.json", "watchlist.json", "countries.json")

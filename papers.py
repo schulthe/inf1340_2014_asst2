@@ -39,6 +39,8 @@ def decide(input_file, watchlist_file, countries_file):
         watchlist_file = watchlist_reader.read()
         json_watchlist = json.loads(watchlist_file)
 
+    #appended list of entries
+
     entry_list = []
 
     for ele in json_inputs:

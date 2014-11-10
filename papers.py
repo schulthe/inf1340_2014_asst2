@@ -112,8 +112,6 @@ def decide(input_file, watchlist_file, countries_file):
 
     #re.IGNORECASE("home" and "passport" and "first_name" and "last_name") etc.
     # or do we say "ignore all uppercase/lowercase discrepancies between all keys and all values in all json files?
-    
-
 
 def valid_passport_format(passport_number):
     """
@@ -128,7 +126,6 @@ def valid_passport_format(passport_number):
     else:
         return False
 
-
 def valid_date_format(date_string):
     """
     Checks whether a date has the format YYYY-mm-dd in numbers
@@ -140,5 +137,3 @@ def valid_date_format(date_string):
         return True
     except ValueError:
         return False
-
-decide("examples_entries.json", "watchlist.json", "countries.json")

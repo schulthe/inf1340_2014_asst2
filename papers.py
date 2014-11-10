@@ -43,15 +43,11 @@ def decide(input_file, watchlist_file, countries_file):
 
     for ele in json_inputs:
         if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in \
-            ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
+        ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
             entry_list.append("Accept")
-
-            ## look into way to say if "passport" NOT in ele.keys()
         else:
             entry_list.append("Reject")
-
     # quarantine function
-
         from_country = json_countries.get(ele.get("from").get("country")).get("medical_advisory")
         if from_country != "":
             entry_list.append("Quarantine")
@@ -59,17 +55,14 @@ def decide(input_file, watchlist_file, countries_file):
             via_country = json_countries.get(ele.get("via").get("country")).get("medical_advisory")
             if via_country != "":
                 entry_list.append("Quarantine")
-
-
      # reject function
-
         if ele.get("entry_reason") == "visit":
             home_country = ele.get("home").get("country")
             if json_countries.get(home_country).get("visitor_visa_required") == "1":
                 if "visa" in ele.keys:
                     if valid_date_format(ele.get("visa").get("date")) == False:
                         entry_list.append("Reject")
-                    oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
+                    oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days=730)
                     if ele.get("visa").get("date") < oldest_acceptable_visa_date.isoformat():
                         entry_list.append("Reject")
 
@@ -92,11 +85,8 @@ def decide(input_file, watchlist_file, countries_file):
                 entry_list.append("Secondary")
             else:
                 entry_list.append("Accept")
-                        
-
     # accept function (do we need to have these stipulations included if whatever entry is left is automatically accept?)
     # if we have this function underneath the reject functions above, it will change priority order for these entries when they are not to be accepted)
-    
 #for ele in json_inputs:
  #           if key.get("home") == "KAN"
   #              print("Accept")
@@ -105,13 +95,12 @@ def decide(input_file, watchlist_file, countries_file):
 
      #       else:
       #          print("Accept")
-
-    
     return entry_list
 ## not sure where to put the re.IGNORECASE method
 
     #re.IGNORECASE("home" and "passport" and "first_name" and "last_name") etc.
     # or do we say "ignore all uppercase/lowercase discrepancies between all keys and all values in all json files?
+
 
 def valid_passport_format(passport_number):
     """
@@ -125,6 +114,7 @@ def valid_passport_format(passport_number):
         return True
     else:
         return False
+
 
 def valid_date_format(date_string):
     """

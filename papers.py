@@ -42,10 +42,10 @@ def decide(input_file, watchlist_file, countries_file):
     entry_list = []
 
     for ele in json_inputs:
-        if ("passport") in ele.keys() and ("first_name") in ele.keys() and ("last_name") in ele.keys() and ("home") in \
-            ele.keys() and ("entry_reason") in ele.keys() and ("from") in ele.keys():
+        if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in \
+                ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
 
-    # quarantine function
+        #Quarantine if entry on medical advisory list
 
             from_country = json_countries.get(ele.get["from"].get["country"]).get["medical_advisory"].lower()
             if from_country != "":
@@ -55,7 +55,7 @@ def decide(input_file, watchlist_file, countries_file):
                 if via_country != "":
                     entry_list.append("Quarantine")
 
-    # reject function
+    # Reject if visitor visa is required and not valid
 
             if ele.get["entry_reason"].lower() == "visit":
                 home_country = ele.get("home").get("country").lower()
@@ -63,11 +63,13 @@ def decide(input_file, watchlist_file, countries_file):
                     if "visa" in ele.keys:
                         if valid_date_format(ele.get("visa").get("date")) == False:
                             entry_list.append("Reject")
-                        oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
+                        oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days=730)
                         if ele.get("visa").get("date") < oldest_acceptable_visa_date.isoformat():
                             entry_list.append("Reject")
                 else:
                     entry_list.append("Accept")
+
+    # Reject if transit visa is required and not valid
 
             if ele.get["entry_reason"] == "transit":
                 home_country = ele.get("home").get("country").lower()
@@ -75,13 +77,13 @@ def decide(input_file, watchlist_file, countries_file):
                     if "visa" in ele.keys:
                         if valid_date_format(ele.get["visa"].get["date"]) == False:
                             entry_list.append("Reject")
-                        oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
+                        oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days=730)
                         if ele.get["visa"].get["date"] < oldest_acceptable_visa_date.isoformat():
                             entry_list.append("Reject")
                 else:
                     entry_list.append("Accept")
 
-    # secondary function
+    # Secondary if on watchlist
                 
             for item in json_watchlist:
                 if item.get["first_name"].lower() == ele.get["first_name"].lower() and item.get["last_name"].lower() \
@@ -94,7 +96,7 @@ def decide(input_file, watchlist_file, countries_file):
         else:
             entry_list.append("Reject")
 
- # priority function
+    # determines decision of entry if conflict, based on priority [ Q, R, S, A ]
 
         if entry_list == "Accept" and "Secondary" and "Reject" and "Quarantine":
             entry_list = "Quarantine"
@@ -123,6 +125,7 @@ def decide(input_file, watchlist_file, countries_file):
 
     return entry_list
 
+
 def valid_passport_format(passport_number):
     """
     Checks whether a passport number is five sets of five alpha-number characters separated by dashes
@@ -136,6 +139,7 @@ def valid_passport_format(passport_number):
     else:
         return False
 
+
 def valid_visa_format(visa_code):
     """
     Checks whether a visa is five sets of five alpha-number characters separated by dashes
@@ -148,6 +152,7 @@ def valid_visa_format(visa_code):
         return True
     else:
         return False
+
 
 def valid_date_format(date_string):
     """

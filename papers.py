@@ -42,8 +42,8 @@ def decide(input_file, watchlist_file, countries_file):
     entry_list = []
 
     for ele in json_inputs:
-        if "passport" in ele.keys() and "first_name" in ele.keys() and "last_name" in ele.keys() and "home" in \
-            ele.keys() and "entry_reason" in ele.keys() and "from" in ele.keys():
+        if ["passport"] in ele.keys() and ["first_name"] in ele.keys() and ["last_name"] in ele.keys() and ["home"] in \
+            ele.keys() and ["entry_reason"] in ele.keys() and ["from"] in ele.keys():
             entry_list.append("Accept")
 
             ## look into way to say if "passport" NOT in ele.keys()
@@ -52,11 +52,11 @@ def decide(input_file, watchlist_file, countries_file):
 
     # quarantine function
 
-        from_country = json_countries.get(ele.get("from").get("country")).get("medical_advisory")
+        from_country = json_countries.get(ele.get["from"].get["country"]).get["medical_advisory"]
         if from_country != "":
             entry_list.append("Quarantine")
         if "via" in ele.keys():
-            via_country = json_countries.get(ele.get("via").get("country")).get("medical_advisory")
+            via_country = json_countries.get(ele.get["via"].get["country"]).get["medical_advisory"]
             if via_country != "":
                 entry_list.append("Quarantine")
 
@@ -64,31 +64,31 @@ def decide(input_file, watchlist_file, countries_file):
      # reject function
 
         if ele.get("entry_reason") == "visit":
-            home_country = ele.get("home").get("country")
-            if json_countries.get(home_country).get("visitor_visa_required") == "1":
+            home_country = ele.get["home"].get["country"]
+            if json_countries.get(home_country).get["visitor_visa_required"] == "1":
                 if "visa" in ele.keys:
-                    if valid_date_format(ele.get("visa").get("date")) == False:
+                    if valid_date_format(ele.get["visa"].get["date"]) == False:
                         entry_list.append("Reject")
                     oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
-                    if ele.get("visa").get("date") < oldest_acceptable_visa_date.isoformat():
+                    if ele.get["visa"].get["date"] < oldest_acceptable_visa_date.isoformat():
                         entry_list.append("Reject")
 
-        if ele.get("entry_reason") == "transit":
-            home_country = ele.get("home").get("country")
-            if json_countries.get(home_country).get("transit_visa_required") == "1":
+        if ele.get["entry_reason"] == "transit":
+            home_country = ele.get["home"].get["country"]
+            if json_countries.get(home_country).get["transit_visa_required"] == "1":
                 if "visa" in ele.keys:
-                    if valid_date_format(ele.get("visa").get("date")) == False:
+                    if valid_date_format(ele.get["visa"].get["date"]) == False:
                         entry_list.append("Reject")
                     oldest_acceptable_visa_date = datetime.date.today() - datetime.date.timedelta(days = 730)
-                    if ele.get("visa").get("date") < oldest_acceptable_visa_date.isoformat():
+                    if ele.get["visa"].get["date"] < oldest_acceptable_visa_date.isoformat():
                         entry_list.append("Reject")
 
     # secondary function
                 
         for item in json_watchlist:
-            if item.get("first_name") == ele.get("first_name") and item.get("last_name") == ele.get("last_name"):
+            if item.get["first_name"] == ele.get["first_name"] and item.get["last_name"] == ele.get["last_name"]:
                 entry_list.append("Secondary")
-            elif item.get("passport") == ele.get("passport"):
+            elif item.get["passport"] == ele.get["passport"]:
                 entry_list.append("Secondary")
             else:
                 entry_list.append("Accept")
